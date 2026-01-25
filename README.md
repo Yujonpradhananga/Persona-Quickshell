@@ -4,7 +4,7 @@ A custom Quickshell configuration featuring a modern, persona-themed desktop env
 
 ## Demo
 
-[Watch the demo video](https://github.com/Yujonpradhananga/Persona-Quickshell-/raw/refs/heads/main/Promo/rice.mp4)
+https://github.com/user-attachments/assets/78e3685d-7643-4e5e-ab2d-d2b7f1a44dbb
 
 ## Features
 
