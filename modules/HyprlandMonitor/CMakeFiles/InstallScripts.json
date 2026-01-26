@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/yujon/Projects/quickshell/modules/HyprlandMonitor/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

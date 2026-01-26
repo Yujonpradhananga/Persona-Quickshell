@@ -111,21 +111,21 @@ Scope {
         }
         
 
-        Rectangle {
+          Rectangle {
             anchors.fill: parent
             color: "transparent"
-            
+              
             MouseArea {
-                anchors.fill: parent
-                onClicked: root.shouldShow = false
+              anchors.fill: parent
+              onClicked: root.shouldShow = false
             }
-            
+              
 
             Item {
                 id: contentCard
                 anchors.top:parent.top
-anchors.horizontalCenter: parent.horizontalCenter
-    anchors.topMargin: 50
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.topMargin: 50
                 width: 420
                 height: 200
                 
@@ -138,41 +138,36 @@ anchors.horizontalCenter: parent.horizontalCenter
                 width: 1200
                 height: 1000
               }
-                
-
-                opacity: 0
-                transform: Translate {
-                    id: slideTransform
-                    y: 100
-                }
-                
-                states: State {
-                    name: "visible"
-                    when: root.shouldShow
-                    PropertyChanges { target: contentCard; opacity: 1 }
-                    PropertyChanges { target: slideTransform; y: 0 }
-                }
-                
-                transitions: Transition {
-                    from: "*"
-                    to: "visible"
-                    ParallelAnimation {
-                        NumberAnimation { 
-                            target: contentCard
-                            property: "opacity"
-                            duration: 300
-                            easing.type: Easing.OutQuad 
-                        }
-                        NumberAnimation { 
-                            target: slideTransform
-                            property: "y"
-                            duration: 400
-                            easing.type: Easing.OutBack
-                            easing.overshoot: 0.8
-                        }
+              opacity: 0
+              transform: Translate {
+                  id: slideTransform
+                  y: 100
+              }
+              states: State {
+                name: "visible"
+                when: root.shouldShow
+                PropertyChanges { target: contentCard; opacity: 1 }
+                PropertyChanges { target: slideTransform; y: 0 }
+              }
+              transitions: Transition {
+                  from: "*"
+                  to: "visible"
+                  ParallelAnimation {
+                    NumberAnimation { 
+                      target: contentCard
+                      property: "opacity"
+                      duration: 300
+                      easing.type: Easing.OutQuad 
                     }
-                }
-                
+                    NumberAnimation { 
+                      target: slideTransform
+                      property: "y"
+                      duration: 400
+                      easing.type: Easing.OutBack
+                      easing.overshoot: 0.8
+                    }
+                  }
+              }
                 onVisibleChanged: {
                     if (!visible) {
                         slideTransform.y = 100
@@ -270,6 +265,6 @@ anchors.horizontalCenter: parent.horizontalCenter
                     }
                 }
             }
-        }
+          }
     }
 }

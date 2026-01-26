@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Hyprland
-import Quickshell.Io
+import HyprlandMonitor 1.0
 
 Scope {
     id: root
@@ -42,67 +42,53 @@ Scope {
 
     property var windowList: []
 
+    // HyprlandMonitor plugin instance
+    HyprlandMonitor {
+        id: hyprlandMonitor
+
+        onWindowListChanged: {
+            updateWindowListFromMonitor()
+        }
+
+        onHyprlandEvent: (event, data) => {
+            // Events are already handled by onWindowListChanged
+            // but you can add custom handling here if needed
+        }
+    }
+
     Connections {
         target: Hyprland
         function onFocusedWorkspaceChanged() {
             root.activeWorkspaceId = Hyprland.focusedWorkspace?.id ?? 1
         }
-        function onRawEvent(event) {
-            if (event.name === "openwindow" || event.name === "closewindow" || 
-                event.name === "movewindow" || event.name === "movewindowv2") {
-                updateWindowList()
-            }
-        }
     }
 
-    function updateWindowList() {
-        getClientsProc.running = true
-    }
-
-    Process {
-        id: getClientsProc
-        command: ["bash", "-c", "hyprctl clients -j"]
+    function updateWindowListFromMonitor() {
+        let windows = []
+        const clients = hyprlandMonitor.windowList
         
-        stdout: StdioCollector {
-            onStreamFinished: {
-                const rawText = this.text.trim()
-                
-                if (rawText.length === 0 || rawText.includes("HYPRLAND_INSTANCE_SIGNATURE not set")) {
-                    console.warn("Hyprland not available or not running")
-                    root.windowList = []
-                    return
-                }
-                
-                try {
-                    const clients = JSON.parse(rawText)
-                    let windows = []
-                    
-                    for (let i = 0; i < clients.length; i++) {
-                        let client = clients[i]
-                        windows.push({
-                            workspace: { id: client.workspace?.id ?? 1 },
-                            address: client.address ?? "",
-                            at: [client.at?.[0] ?? 0, client.at?.[1] ?? 0],
-                            size: [client.size?.[0] ?? 100, client.size?.[1] ?? 100],
-                            class: client.class ?? "Window",
-                            floating: client.floating ?? false
-                        })
-                    }
-                    
-                    root.windowList = windows
-                } catch (e) {
-                    console.error("Failed to parse clients:", e)
-                    root.windowList = []
-                }
-            }
+        for (let i = 0; i < clients.length; i++) {
+            let client = clients[i]
+            windows.push({
+                workspace: { id: client.workspace?.id ?? 1 },
+                address: client.address ?? "",
+                at: [client.at?.[0] ?? 0, client.at?.[1] ?? 0],
+                size: [client.size?.[0] ?? 100, client.size?.[1] ?? 100],
+                class: client.class ?? "Window",
+                floating: client.floating ?? false
+            })
         }
+        
+        root.windowList = windows
     }
 
-    Component.onCompleted: updateWindowList()
+    Component.onCompleted: {
+        updateWindowListFromMonitor()
+    }
 
     onShouldShowChanged: {
         if (shouldShow) {
-            updateWindowList()
+            hyprlandMonitor.refresh()
         }
     }
 
@@ -235,7 +221,7 @@ Scope {
                                 anchors.fill: parent
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: {
-                                    Hyprland.dispatch(`workspace ${parent.workspaceId}`)
+                                    hyprlandMonitor.dispatch(`workspace ${parent.workspaceId}`)
                                 }
                             }
                         }
@@ -392,11 +378,11 @@ Scope {
                                     root.isDraggingToClose = false
 
                                     if (shouldClose && wasDragging && addr) {
-                                        Hyprland.dispatch(`closewindow address:${addr}`)
-                                        Qt.callLater(root.updateWindowList)
+                                        hyprlandMonitor.dispatch(`closewindow address:${addr}`)
+                                        Qt.callLater(hyprlandMonitor.refresh)
                                     } else if (targetWs !== -1 && targetWs !== fromWs && wasDragging && addr) {
-                                        Hyprland.dispatch(`movetoworkspacesilent ${targetWs},address:${addr}`)
-                                        Qt.callLater(root.updateWindowList)
+                                        hyprlandMonitor.dispatch(`movetoworkspacesilent ${targetWs},address:${addr}`)
+                                        Qt.callLater(hyprlandMonitor.refresh)
                                     } else {
                                         windowItem.x = windowItem.targetX
                                         windowItem.y = windowItem.targetY

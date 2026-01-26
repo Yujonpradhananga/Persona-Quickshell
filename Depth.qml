@@ -86,7 +86,7 @@ Scope {
                // Layer 2: Right Text 
                 Text {
                   id:timehour 
-                            text: clock.date.toLocaleString(Qt.locale("en_US"), "h")
+                  text: clock.date.toLocaleString(Qt.locale("en_US"), "h")
                   font.pixelSize: 300
                   font.bold: true
                   font.family: "Glirock"
@@ -111,7 +111,7 @@ Scope {
                   z: 1
                   anchors {
                       horizontalCenter:parent.horizontalCenter 
-                      horizontalCenterOffset: parent.width * 0.104  // ~10.4% right of center
+                      horizontalCenterOffset: parent.width * 0.104
                       bottom:parent.bottom
                       bottomMargin: parent.height * 0.650
                   }
@@ -133,20 +133,16 @@ Scope {
                       Rectangle {
                         id: barItem
                         readonly property real magnitude: root.cavaData[index] || 0
-                        
                         width: root.barHeight
                         height: 6 + (magnitude * root.maxBarWidth)
                         radius: root.barHeight / 2
-                        
                         anchors.bottom: parent.bottom
-                        
                         color: colors.color4
-                        
                         gradient: Gradient {
                             orientation: Gradient.Vertical
-                            GradientStop { position: 0.0; color: "#ffffff" }  // Top (flipped)
+                            GradientStop { position: 0.0; color: "#ffffff" }  
                             GradientStop { position: 0.3; color: colors.color4}
-                            GradientStop { position: 1.0; color: colors.color5}  // Bottom
+                            GradientStop { position: 1.0; color: colors.color5}  
                         }
                         border.color: Qt.rgba(1, 1, 1, 0.2)
                         border.width: 1

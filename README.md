@@ -8,6 +8,20 @@ Hyprland and MangoWC window manager support
 https://github.com/user-attachments/assets/78e3685d-7643-4e5e-ab2d-d2b7f1a44dbb
 
 
+# Dependencies
+
+## plugins
+A hyprland monitor plugin has been used for the workspace overview implementation.
+The repo to download and build is here, just follow its instructions:
+https://github.com/Happilli/HyprlandMonitor/tree/main
+
+if you dont want to mannually build it and go through the installation you can use the old method, by replacing all the instances of Mousemover with Mousemoverold in the AppLauncher.qml file
+
+## fonts used
+-Linux Biolinum
+-Montserrat
+-Glirock
+
 # Credits
 
 Inspiration taken from:
@@ -36,12 +50,6 @@ replace the Mousemover.qml in the OnClicked in the AppDrawer.qml file to the Mou
 # Power menu
 the power menu currently uses loginctl commands, feel free to change them to your needs.
 
-# Dependencies
-Qt6
-## fonts
--Linux Biolinum
--Montserrat
--Glirock
 
 #
 
