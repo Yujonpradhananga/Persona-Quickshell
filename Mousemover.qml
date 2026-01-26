@@ -9,7 +9,6 @@ Scope {
     property bool shouldShow: false
     
     Colors { id: colors }
-    // Configuration
     property int workspacesShown: 10
     property int columns: 5
     property int rows: 2
@@ -17,7 +16,6 @@ Scope {
     property real workspaceHeight: 150
     property real workspaceSpacing: 14
 
-    // Japanese mapping for workspace numbers
     readonly property var jpN: ({
         1: "一",
         2: "二",
@@ -31,34 +29,32 @@ Scope {
         10: "十"
     })
 
-    // Monitor info for scaling
     property var activeMonitor: Hyprland.focusedMonitor
     property real monitorWidth: activeMonitor?.width ?? 1920
     property real monitorHeight: activeMonitor?.height ?? 1080
     
-    // Scaling ratios
     readonly property real scaleX: workspaceWidth / monitorWidth
     readonly property real scaleY: workspaceHeight / monitorHeight
 
-    // Drag state
+
     property int draggingFromWorkspace: -1
     property int draggingTargetWorkspace: -1
     property bool isDraggingToClose: false
 
-    // Active workspace ID - direct binding to Hyprland
+
     property int activeWorkspaceId: Hyprland.focusedWorkspace?.id ?? 1
 
-    // Window list from hyprctl
+
     property var windowList: []
 
-    // Keep workspace ID updated
+
     Connections {
         target: Hyprland
         function onFocusedWorkspaceChanged() {
             root.activeWorkspaceId = Hyprland.focusedWorkspace?.id ?? 1
         }
         function onRawEvent(event) {
-            // Refresh window list on window events
+
             if (event.name.includes("window") || event.name.includes("workspace") || 
                 event.name === "openwindow" || event.name === "closewindow" || 
                 event.name === "movewindow") {
@@ -67,7 +63,7 @@ Scope {
         }
     }
 
-    // Refresh when shown
+
     onShouldShowChanged: {
         if (shouldShow) {
             refreshWindows()
@@ -125,14 +121,14 @@ Scope {
                     onClicked: root.shouldShow = false
                 }
                 
-                // Workspace grid container
+
                 Item {
                     id: workspaceContainer
                     anchors.centerIn: parent
                     width: (root.workspaceWidth + root.workspaceSpacing) * root.columns - root.workspaceSpacing
                     height: (root.workspaceHeight + root.workspaceSpacing) * root.rows - root.workspaceSpacing
 
-                    // Workspaces Repeater
+
                     Repeater {
                         model: root.workspacesShown
 
@@ -171,7 +167,7 @@ Scope {
                                 }
                             }
 
-                            // Japanese number watermark
+
                             Text {
                                 anchors.centerIn: parent
                                 text: root.jpN[parent.workspaceId] ?? parent.workspaceId
@@ -181,7 +177,7 @@ Scope {
                                 opacity: 0.15
                             }
 
-                            // Workspace ID in corner
+
                             Text {
                                 anchors.right: parent.right
                                 anchors.bottom: parent.bottom
@@ -193,7 +189,7 @@ Scope {
                                 opacity: 0.4
                             }
 
-                            // Drop target highlight
+
                             Rectangle {
                                 anchors.fill: parent
                                 radius: parent.radius
@@ -225,7 +221,7 @@ Scope {
                                 }
                             }
 
-                            // Click to switch workspace
+
                             MouseArea {
                                 anchors.fill: parent
                                 cursorShape: Qt.PointingHandCursor
@@ -236,7 +232,7 @@ Scope {
                         }
                     }
 
-                    // Windows Repeater - using windowList from hyprctl
+
                     Repeater {
                         model: root.windowList
 
@@ -245,7 +241,7 @@ Scope {
                             required property var modelData
                             required property int index
 
-                            // Get workspace ID from the window data
+
                             readonly property int workspaceId: modelData.workspace?.id ?? 1
                             readonly property int workspaceIndex: workspaceId - 1
                             readonly property bool isVisible: workspaceIndex >= 0 && workspaceIndex < root.workspacesShown
@@ -257,7 +253,7 @@ Scope {
                             readonly property real baseX: col * (root.workspaceWidth + root.workspaceSpacing)
                             readonly property real baseY: row * (root.workspaceHeight + root.workspaceSpacing)
 
-                            // Window position and size from hyprctl data
+
                             readonly property var atArray: modelData.at ?? [0, 0]
                             readonly property var sizeArray: modelData.size ?? [100, 100]
 
@@ -283,7 +279,7 @@ Scope {
                             readonly property real targetX: baseX + clampedX
                             readonly property real targetY: baseY + clampedY
 
-                            // Window address for commands
+
                             readonly property string windowAddress: modelData.address ?? ""
 
                             property bool isDragging: false
@@ -330,7 +326,7 @@ Scope {
                                 }
                             }
 
-                            // Hover/drag overlay
+
                             Rectangle {
                                 anchors.fill: parent
                                 radius: windowBackground.radius
@@ -393,11 +389,11 @@ Scope {
 
                                     if (shouldClose && wasDragging && addr) {
                                         Hyprland.dispatch(`closewindow address:${addr}`)
-                                        // Refresh after closing
+
                                         Qt.callLater(root.refreshWindows)
                                     } else if (targetWs !== -1 && targetWs !== fromWs && wasDragging && addr) {
                                         Hyprland.dispatch(`movetoworkspacesilent ${targetWs},address:${addr}`)
-                                        // Refresh after moving
+
                                         Qt.callLater(root.refreshWindows)
                                     } else {
                                         windowItem.x = windowItem.targetX

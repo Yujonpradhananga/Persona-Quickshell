@@ -21,13 +21,12 @@ Singleton {
 
     // Timer to poll MangoWC state - faster polling for better responsiveness
     Timer {
-        interval: 100  // Poll every 100ms for quick updates
+        interval: 100  
         running: root.dwlAvailable
         repeat: true
         onTriggered: root.getTagState()
     }
 
-    // Check if MangoWC is running
     Process {
         id: checkProcess
         command: ["sh", "-c", "pgrep -x mango || pgrep -x dwl"]
@@ -46,7 +45,6 @@ Singleton {
         }
     }
 
-    // Get tag state using mmsg -g -t -l (tags + layout)
     Process {
         id: tagStateProcess
         command: ["mmsg", "-g", "-t", "-l"]
@@ -82,7 +80,6 @@ Singleton {
                 const outputName = parts[0]
                 const key = parts[1]
                 
-                // Initialize output if needed
                 if (!newOutputs[outputName]) {
                     newOutputs[outputName] = {
                         name: outputName,
@@ -148,21 +145,17 @@ Singleton {
             .map(tag => tag.tag)
     }
 
-    // Switch to a specific tag (uses tag number directly, not bitmask)
     function switchToTag(outputName, tagIndex) {
         if (!dwlAvailable) {
             console.warn("MangoWC not available")
             return
         }
         
-        // tagIndex is 0-based, so tag 0 = "1", tag 1 = "2", etc.
         const tagNumber = tagIndex + 1
         console.log("Switching to tag", tagNumber, "on output", outputName)
         
-        // Use mmsg -t <tag_number> to switch focus to that tag
         Quickshell.execDetached(["mmsg", "-t", tagNumber.toString()])
         
-        // Refresh state after a short delay
         refreshTimer.restart()
     }
 
@@ -172,7 +165,6 @@ Singleton {
         const output = getOutputState(outputName)
         if (!output || !output.tags) return
 
-        // Calculate current mask
         let currentMask = 0
         output.tags.forEach(tag => {
             if (tag.state === 1) {
@@ -182,15 +174,12 @@ Singleton {
 
         const clickedMask = 1 << tagIndex
         let newMask = currentMask ^ clickedMask
-
-        // If toggling off the last tag, switch to it instead
         if (newMask === 0) {
             newMask = clickedMask
         }
         
         console.log("Toggling tag", tagIndex + 1, "on output", outputName, "new mask", newMask)
         
-        // Use -v for viewing
         Quickshell.execDetached(["mmsg", "-o", outputName, "-v", newMask.toString()])
         refreshTimer.restart()
     }

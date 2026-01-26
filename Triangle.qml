@@ -33,7 +33,7 @@ ShellRoot{
       property real middleInnerSlant: 0
       property bool middleHovered: false
       
-      // Middle component - tilts to the side
+
       SequentialAnimation {
           loops: Animation.Infinite
           running: window.middleHovered
@@ -83,7 +83,7 @@ ShellRoot{
       }
       BatteryMonitor { id: battery }
 
-      // Battery triangle - mirrored horizontally
+
       Column{
         anchors.centerIn: parent
         anchors.verticalCenterOffset: 450
@@ -93,7 +93,7 @@ ShellRoot{
           Item {
           width: batteryText.width + 50
           height: batteryText.height + 50
-          transform: Scale { xScale: -1; origin.x: (batteryText.width + 50) / 2 }  // Mirror horizontally
+          transform: Scale { xScale: -1; origin.x: (batteryText.width + 50) / 2 }
           
           property bool hovered: false
           scale: hovered ? 1.2 : 1.0
@@ -122,7 +122,7 @@ ShellRoot{
               }
           }
           
-        //outer triangle
+
                   Canvas {
                     anchors.fill: parent
                     anchors.margins: -10
@@ -139,15 +139,15 @@ ShellRoot{
                       ctx.beginPath();
                       var offsetTop = 50;
                       var offsetRight = 90;
-                      // Flip the triangle horizontally by reversing the points
-                      ctx.moveTo(parent.width - (80 + (parent.width - offsetTop)), 0);  // Top point - flipped
-                      ctx.lineTo(parent.width - (20 + parent.width + offsetRight), parent.height);  // Bottom left - flipped
-                      ctx.lineTo(parent.width - 90, parent.height);  // Bottom right - flipped
+
+                      ctx.moveTo(parent.width - (80 + (parent.width - offsetTop)), 0);
+                      ctx.lineTo(parent.width - (20 + parent.width + offsetRight), parent.height);
+                      ctx.lineTo(parent.width - 90, parent.height);
                       ctx.closePath();
                       ctx.fill();
                     }
                   }
-                  // White inner triangle
+
                   Canvas {
                     anchors.fill: parent
                     anchors.margins: -10
@@ -163,7 +163,7 @@ ShellRoot{
                         ctx.fillStyle = "white";
                         ctx.beginPath();
                         var offset = -10;
-                        // Flip the triangle horizontally by reversing the points
+
                         ctx.moveTo(parent.width - (30 + (parent.width - offset)), 10);
                         ctx.lineTo(parent.width - (30 + parent.width), parent.height - 10);
                         ctx.lineTo(parent.width - 30, parent.height - 10);

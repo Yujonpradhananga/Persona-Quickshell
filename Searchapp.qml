@@ -14,7 +14,6 @@ Scope {
     
     Colors { id: colors }
     
-    // Shared state for IPC toggling
     property bool forcedOpen: false
 
     IpcHandler {
@@ -91,7 +90,6 @@ Scope {
                     anchors.fill: parent
                     spacing: 10
 
-                    // Carousel container
                     Item {
                         id: carousel
                         Layout.fillWidth: true
@@ -102,7 +100,6 @@ Scope {
                         property real arcRadius: 150
                         property real arcAngleSpan: 100
                         
-                        // Filter apps based on search
                         property var filteredApps: {
                             const stxt = search.text.toLowerCase();
                             if (stxt === "") {
@@ -122,8 +119,6 @@ Scope {
                                 return true;
                             });
                         }
-// Glass arc background
-// Glass arc background
 Rectangle {
     id: glassArc
     anchors.centerIn: parent
@@ -135,10 +130,6 @@ Rectangle {
     
     color: Qt.rgba(15/255, 15/255, 15/255, 0.4)
 }
-                        // Background arc
-
-
-                        // Mouse wheel handler
                         MouseArea {
                             anchors.fill: parent
                             propagateComposedEvents: true
@@ -154,7 +145,6 @@ Rectangle {
                             }
                         }
 
-                        // App icons on arc
                         Repeater {
                             model: carousel.filteredApps
                             
@@ -184,7 +174,6 @@ Rectangle {
                                 property real baseScale: isCenter ? 1.3 : 0.85
                                 property real hoverScale: isHovered ? 1.15 : 1.0
 
-                                // Drop shadow
                                 Rectangle {
                                     id: dropShadow
                                     visible: appDelegate.isCenter || appDelegate.isHovered
@@ -231,7 +220,6 @@ Rectangle {
                                     Behavior on rotation { NumberAnimation { duration: 200 } }
                                 }
                                 
-                                // App button
                                 Rectangle {
                                     id: appButton
                                     anchors.centerIn: parent
@@ -255,7 +243,6 @@ Rectangle {
                                     rotation: appDelegate.isCenter ? +5 : appDelegate.angle * 1.5
                                     Behavior on rotation { NumberAnimation { duration: 200 } }
                                     
-                                    // Fallback background
                                     Rectangle {
                                         id: fallbackBg
                                         anchors.fill: parent
@@ -273,7 +260,6 @@ Rectangle {
                                         }
                                     }
 
-                                    // App icon
                                     Image {
                                         id: appIcon
                                         anchors.centerIn: parent
@@ -341,7 +327,6 @@ Rectangle {
                                     }
                                 }
                                 
-                                // Tooltip
                                 Rectangle {
                                     visible: appDelegate.isCenter
                                     color: colors.color9
@@ -369,7 +354,6 @@ Rectangle {
                         }
                     }
 
-                    // Search box (hidden but functional)
                     Rectangle {
                         id: searchContainer
                         Layout.alignment: Qt.AlignVCenter

@@ -5,8 +5,6 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 
-// First, create BatteryMonitor.qml as a separate file:
-// (This is the QtObject that holds battery data)
 
 ShellRoot {
   PanelWindow {
@@ -19,7 +17,6 @@ ShellRoot {
     height: 100
     color: "#1e1e2e"
     
-    // Instantiate the battery monitor
     QtObject {
       id: battery
       
@@ -71,7 +68,6 @@ ShellRoot {
       }
     }
     
-    // Display the battery info
     Row {
       anchors.centerIn: parent
       spacing: 20

@@ -23,7 +23,7 @@ Scope {
         triggeredOnStart: true
         onTriggered: {
             currentFile.reload()
-            maxFile.reload() // Reload max occasionally or just once? Keeping provided logic.
+            maxFile.reload() 
         }
     }
 
@@ -96,15 +96,12 @@ Scope {
                     }
                     spacing: 10
 
-                    // Brightness icon
                     Text {
                         text: "󰃠"
                         color: "#ffffff"
                         font.pixelSize: 25
                         font.family: "Montserrat Light"
                     }
-
-                    // Slider
                     Rectangle {
                         Layout.fillWidth: true
                         implicitHeight: 10
@@ -123,7 +120,6 @@ Scope {
                         }
                     }
 
-                    // Percentage text
                     Text {
                         text: root.brightness + "%"
                         color: "#ffffff"

@@ -8,7 +8,6 @@ Scope {
     id: root
     Colors { id: colors }
     
-    // Cava properties
     property int barCount: 60
     property int maxBarWidth: 300
     property int barHeight: 15
@@ -27,17 +26,16 @@ Scope {
         stdout: SplitParser {
             splitMarker: "\n"
             onRead: data => {
-                const raw = data; // Avoid trim() allocation if possible
+                const raw = data; 
                 if (!raw) return;
                 
                 const bars = raw.split(";")
-                // cava output ends with a semi-colon, so the last element is empty
                 const len = bars.length > 0 && bars[bars.length-1] === "" ? bars.length - 1 : bars.length;
 
                 if (len >= root.barCount) {
                     const vals = new Float32Array(root.barCount);
                     for (let i = 0; i < root.barCount; i++) {
-                        const n = +bars[i]; // Fast string-to-number conversion
+                        const n = +bars[i]; 
                         vals[i] = isNaN(n) ? 0 : n / 1000.0;
                     }
                     root.cavaData = vals;
@@ -72,7 +70,7 @@ Scope {
                     id: clock
                     precision: SystemClock.Minutes
                 }
-                // Layer 1: Video wallpaper (background)
+                // Layer 1: Video wallpaper 
                 Video {
                     id: wallpaper
                     source: Qt.resolvedUrl("assets/wallpapers/solo_30fps.mp4")
@@ -86,7 +84,7 @@ Scope {
                     z: 0
                     enabled: false
                 }
-                
+               // Layer 2: Right Text 
                 Text {
                   id:timehour 
                             text: clock.date.toLocaleString(Qt.locale("en_US"), "h")
@@ -103,6 +101,7 @@ Scope {
                   }
                 }
 
+               // Layer 2: Right Text 
                 Text {
                   id:timemin 
                   text: clock.date.toLocaleString(Qt.locale("en_US"), "mm")
@@ -118,7 +117,7 @@ Scope {
                       bottomMargin: parent.height * 0.650
                   }
                 }
-                // Layer 2: Cava visualizer (middle)
+                // Layer 2.5: Cava visualizer (middle)
                 Item {
                   anchors.fill: parent
                   z: 1.5
@@ -127,7 +126,7 @@ Scope {
                     anchors {
                       horizontalCenter: parent.horizontalCenter
                       bottom: parent.bottom
-                      bottomMargin:550  // Adjust this to move it up/down
+                      bottomMargin:550  
                     }
                     spacing: root.barGap
                     Repeater {
@@ -140,7 +139,6 @@ Scope {
                         height: 6 + (magnitude * root.maxBarWidth)
                         radius: root.barHeight / 2
                         
-                        // Anchor to bottom so it grows upward
                         anchors.bottom: parent.bottom
                         
                         color: colors.color4
@@ -158,7 +156,6 @@ Scope {
                     }
                   }
                 }
-                // Layer 2.5: Text overlay (add this new section)
             
             // Layer 3: PNG overlay (front)
             Image {

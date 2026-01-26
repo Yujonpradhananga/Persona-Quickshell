@@ -7,7 +7,7 @@ Scope {
     id: root
     property bool shouldShow: false
     
-    // Configuration
+
     property int workspacesShown: 9
     property int columns: 3
     property int rows: 3
@@ -15,18 +15,18 @@ Scope {
     property real workspaceHeight: 150
     property real workspaceSpacing: 14
 
-    // Japanese mapping
+
     readonly property var jpN: ({
         1: "一", 2: "二", 3: "三", 4: "四", 5: "五",
         6: "六", 7: "七", 8: "八", 9: "九"
     })
 
-    // Drag state
+
     property int draggingFromWorkspace: -1
     property int draggingTargetWorkspace: -1
     property bool isDraggingToClose: false
 
-    // Window list from DwlWindows
+
     property var windowList: DwlWindows.windowList
 
     onShouldShowChanged: {
@@ -36,7 +36,7 @@ Scope {
         }
     }
 
-    // Connections to update window list and service state
+
     Connections {
         target: DwlWindows
         function onWindowsChanged() {
@@ -61,11 +61,11 @@ Scope {
                 visible: root.shouldShow
                 screen: lazyLoader.modelData
                 
-                // Track per-monitor active tag:
+
                 readonly property string outputName: lazyLoader.modelData.name
                 property int activeTagIndex: 0
 
-                // Update active tag for this specific monitor
+
                 function updateActiveTag() {
                     if (!DwlService.dwlAvailable) return
                     let activeTags = DwlService.getActiveTags(overviewWindow.outputName)
@@ -102,7 +102,7 @@ Scope {
                         onClicked: root.shouldShow = false
                     }
                     
-                    // Workspace Grid
+
                     Item {
                         id: workspaceContainer
                         anchors.centerIn: parent
@@ -122,7 +122,7 @@ Scope {
                                 
                                 readonly property bool isActive: overviewWindow.activeTagIndex === tagIndex
                                 
-                                // Tag client count specific to THIS monitor
+
                                 readonly property int clientCount: {
                                     if (!DwlService.dwlAvailable) return 0
                                     let state = DwlService.getOutputState(overviewWindow.outputName)
@@ -178,8 +178,8 @@ Scope {
                                     visible: workspaceRect.clientCount > workspaceRect.visualWindowCount
                                 }
 
-                                // Click to switch - Z: 100 to be top-most
-                                // REMOVED: root.shouldShow = false (no auto-close)
+
+
                                 MouseArea {
                                     anchors.fill: parent
                                     cursorShape: Qt.PointingHandCursor
@@ -187,7 +187,7 @@ Scope {
                                     onClicked: {
                                         console.log("Switching " + overviewWindow.outputName + " to tag " + workspaceRect.tagIndex)
                                         DwlService.switchToTag(overviewWindow.outputName, workspaceRect.tagIndex)
-                                        // Overview stays open - user can click outside to close
+
                                     }
                                 }
                                 
@@ -208,7 +208,7 @@ Scope {
                             }
                         }
 
-                        // Windows
+
                         Repeater {
                             model: root.windowList
                             Item {
@@ -216,13 +216,13 @@ Scope {
                                 required property var modelData
                                 required property int index
                                 
-                                // Monitor Filtering
+
                                 readonly property bool isOnThisMonitor: modelData.monitorName === overviewWindow.outputName
                                 readonly property int windowTagIndex: modelData.tagIndex
                                 
                                 visible: isOnThisMonitor && windowTagIndex >= 0 && windowTagIndex < root.workspacesShown
                                 
-                                // Logic for positioning:
+
                                 readonly property int col: windowTagIndex % root.columns
                                 readonly property int row: Math.floor(windowTagIndex / root.columns)
                                 readonly property real baseX: col * (root.workspaceWidth + root.workspaceSpacing)
@@ -251,7 +251,7 @@ Scope {
                                 
                                 x: targetX; y: targetY
                                 width: 75; height: 55
-                                z: isDragging ? 200 : 5 // Higher than workspace click area
+                                z: isDragging ? 200 : 5
 
                                 Drag.active: dragArea.drag.active
                                 Drag.keys: ["window"]
@@ -276,24 +276,24 @@ Scope {
                                     id: dragArea
                                     anchors.fill: parent
                                     drag.target: parent
-                                    // Make sure we don't propagate clicks to the workspace below if we are clicking a window
+
                                     propagateComposedEvents: false
                                     
                                     onPressed: {
                                         windowItem.isDragging = true
                                         root.draggingFromWorkspace = windowItem.windowTagIndex
-                                        // Activate on press for response, but perform full switch logic on Click
+
                                         if (windowItem.modelData.toplevel) windowItem.modelData.toplevel.activate()
                                     }
                                     
                                     onClicked: {
-                                         // Full switch sequence to "move to where the window is"
+
                                          if (windowItem.modelData.toplevel) {
-                                             // 1. Switch workspace view
+
                                              DwlService.switchToTag(overviewWindow.outputName, windowItem.windowTagIndex)
-                                             // 2. Activate window (redundant but safe)
+
                                              windowItem.modelData.toplevel.activate()
-                                             // 3. Close overview
+
                                              root.shouldShow = false
                                          }
                                     }

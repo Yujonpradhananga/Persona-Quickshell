@@ -53,7 +53,6 @@ Scope {
                     }
                 }
 
-                // Hover detection area
                 Item {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
@@ -74,7 +73,6 @@ Scope {
                     }
                 }
 
-                // Main Circle (The Launcher)
                 Item {
                     id: mainCircle
                     anchors.left: parent.left
@@ -196,7 +194,6 @@ Scope {
                     }
                 }
 
-                // Blades Container
                 Item {
                     id: bladesContainer
                     anchors.left: mainCircle.right
@@ -349,7 +346,6 @@ Scope {
                     }
                 }
 
-                // Click outside to close
                 MouseArea {
                     anchors.fill: parent
                     enabled: toolskiRoot.isExpanded

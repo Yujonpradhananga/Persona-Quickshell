@@ -10,38 +10,38 @@ Scope {
     property var targetScreen: null
     Colors { id: colors }
     
-    // Process for poweroff command
+
     Process {
         id: poweroffProcess
         command: ["loginctl", "poweroff"]
         running: false
     }
     
-    // Process for restart command
+
     Process {
         id: restartProcess
         command: ["loginctl", "reboot"]
         running: false
     }
     
-    // Process for logout command (Placeholder, adjust for specific WM/setup)
+
     Process {
         id: logoutProcess
         command: ["loginctl", "terminate-session", "self"]
         running: false
     }
     
-    // Preload PNG images for faster startup
+
     property var preloadedImages: []
     Component.onCompleted: {
-    // Preload PNG images
+
     for (var i = 0; i < 12; i++) {
         var img = Qt.createQmlObject('import QtQuick; Image { visible: false; source: "' + 
             Qt.resolvedUrl("assets/p3r menu/png/pngseq" + String(i).padStart(2, '0') + ".png") + '" }', root)
         preloadedImages.push(img)
     }
     
-    // Preload videos by creating hidden Video components
+
     var video1 = Qt.createQmlObject('import QtQuick; import QtMultimedia; Video { visible: false; source: "' + 
         Qt.resolvedUrl("assets/p3r menu/part2.mp4") + '" }', root)
     var video2 = Qt.createQmlObject('import QtQuick; import QtMultimedia; Video { visible: false; source: "' + 
@@ -51,7 +51,7 @@ Scope {
     preloadedImages.push(video2)
 }
     
-    // Cleanup function to free memory
+
     function cleanup() {
         for (var i = 0; i < preloadedImages.length; i++) {
             if (preloadedImages[i]) {
@@ -90,26 +90,26 @@ Scope {
                 anchors.fill: parent
                 color: "transparent"
                 
-                // Track current stage: 0=png sequence, 1=part2, 2=part3
+
                 property int stage: 0
                 
-                // Slide up transform for exit animation
+
                 transform: Translate {
                     id: slideTransform
                     y: 0
                   }
 
                 function resetMenu() {
-                    // Reset stage
+
                     overlay.stage = 0
                     overlay.opacity = 1
                     slideTransform.y = 0
                     
-                    // Reset PNG sequence
+
                     pngSequence.currentFrame = 0
                     pngSequence.visible = true
                     
-                    // Reset videos
+
                     part2Video.stop()
                     part2Video.visible = false
                     part2Video.seek(0)
@@ -118,7 +118,7 @@ Scope {
                     part3Video.visible = false
                     part3Video.seek(0)
                     
-                    // Preload videos again
+
                     part2Video.play()
                     part2Video.pause()
                     part2Video.seek(0)
@@ -126,11 +126,11 @@ Scope {
                     part3Video.pause()
                     part3Video.seek(0)
                     
-                    // Start animation
+
                     frameAnimation.start()
                 }
                 
-                // Slide up and fade out animation for closing
+
                 ParallelAnimation {
                     id: hideAnimation
                     running: false
@@ -165,26 +165,26 @@ Scope {
                         repeat: false
                         onTriggered: {
                             root.shouldShow = false
-                            // Don't destroy, just reset state
+
                             overlay.stage = 0
                             pngSequence.currentFrame = 0
                         }
                     }
                 
                     Component.onCompleted: {
-                        // Preload part2 and part3 videos
+
                         part2Video.play()
                         part2Video.pause()
                         part2Video.seek(0)
                         part3Video.play()
                         part3Video.pause()
                         part3Video.seek(0)
-                        // Start PNG sequence animation
+
                         pngSequence.visible = true
                         frameAnimation.start()
                     }
                 
-                // PNG Sequence with transparency (plays first)
+
                 Image {
                     id: pngSequence
                     anchors.fill: parent
@@ -219,7 +219,7 @@ Scope {
                     }
                 }
                 
-                // Part 2 video - plays once after PNG sequence
+
                 Video {
                     id: part2Video
                     anchors.fill: parent
@@ -247,7 +247,7 @@ Scope {
                     }
                 }
                 
-                // Part 3 video - loops infinitely
+
                 Video {
                     id: part3Video
                     anchors.fill: parent
@@ -258,7 +258,7 @@ Scope {
                     visible: false
                 }
                 
-                // Power Options Container - use Item instead of Column to prevent shifting
+
                 Item {
                     id: powerOptionsContainer
                     anchors.centerIn: parent
@@ -269,7 +269,7 @@ Scope {
                     visible: overlay.stage >= 1
                     z: 10
                     
-                    // Shutdown Option - fixed position
+
                     Item {
                         id: poweroffItem
                         x: 30
@@ -295,7 +295,7 @@ Scope {
                           onClicked: poweroffProcess.running = true
                         }
                         
-                        // Image (swaps on hover)
+
                         Image {
                             anchors.fill: parent
                             fillMode: Image.PreserveAspectFit
@@ -303,7 +303,7 @@ Scope {
                         }
                     }
                     
-                    // Restart Option - fixed position
+
                     Item {
                         id: restartItem
                         x: 30
@@ -329,7 +329,7 @@ Scope {
                             onClicked: restartProcess.running = true
                         }
                         
-                        // Image (swaps on hover)
+
                         Image {
                             anchors.fill: parent
                             fillMode: Image.PreserveAspectFit
@@ -337,7 +337,7 @@ Scope {
                         }
                     }
                     
-                    // Logout Option - fixed position
+
                     Item {
                         id: logoutItem
                         x: 30
@@ -363,7 +363,7 @@ Scope {
                             onClicked: logoutProcess.running = true
                         }
                         
-                        // Image (swaps on hover)
+
                         Image {
                             anchors.fill: parent
                             fillMode: Image.PreserveAspectFit
@@ -373,14 +373,14 @@ Scope {
                 }
 
                 
-                // Click anywhere to exit (behind power options)
+
                 FocusScope {
                     anchors.fill: parent
                     focus: true
                     
                     MouseArea {
                         anchors.fill: parent
-                        z: -1  // Behind power options
+                        z: -1
                         onClicked: hideAnimation.start()
                     }
                     

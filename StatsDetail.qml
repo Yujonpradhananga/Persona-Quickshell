@@ -8,7 +8,7 @@ Scope {
     id: root
     property bool shouldShow: false
     
-    // --- CPU Logic ---
+
     property var previousCpuStats: null
     property double cpuUsage: 0
     
@@ -32,7 +32,7 @@ Scope {
         }
     }
 
-    // --- RAM Logic ---
+
     property double memUsage: 0
     property string memText: "..."
     
@@ -57,7 +57,7 @@ Scope {
         }
     }
 
-    // --- Disk Logic ---
+
     property double diskUsage: 0
     property string diskText: "..."
     
@@ -82,7 +82,7 @@ Scope {
         }
     }
     
-    // Timer runs when shouldShow is true, updating all data sources
+
     Timer {
         interval: 1000
         running: root.shouldShow
@@ -110,7 +110,7 @@ Scope {
             right: true
         }
         
-        // Overlay to close on click
+
         Rectangle {
             anchors.fill: parent
             color: "transparent"
@@ -120,7 +120,7 @@ Scope {
                 onClicked: root.shouldShow = false
             }
             
-            // Stats Card centered
+
             Item {
                 id: contentCard
                 anchors.top:parent.top
@@ -139,7 +139,7 @@ anchors.horizontalCenter: parent.horizontalCenter
                 height: 1000
               }
                 
-                // Animation properties
+
                 opacity: 0
                 transform: Translate {
                     id: slideTransform
@@ -185,7 +185,7 @@ anchors.horizontalCenter: parent.horizontalCenter
                     anchors.margins: 20
                     spacing: 20
                     
-                    // CPU
+
                     Item {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
@@ -213,7 +213,7 @@ anchors.horizontalCenter: parent.horizontalCenter
                         }
                     }
 
-                    // RAM
+
                     Item {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
@@ -241,7 +241,7 @@ anchors.horizontalCenter: parent.horizontalCenter
                         }
                     }
 
-                    // Disk
+
                     Item {
                         Layout.fillWidth: true
                         Layout.fillHeight: true

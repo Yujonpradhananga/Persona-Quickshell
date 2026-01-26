@@ -52,7 +52,7 @@ Scope {
 					}
 					spacing: 10
 					
-					// Volume icon (optional - you can add this)
+
 					Text {
 						text: {
 							var vol = Math.round((Pipewire.defaultAudioSink?.audio.volume ?? 0) * 100);
@@ -65,7 +65,7 @@ Scope {
 						font.family: "Montserrat Light"
 					}
 					
-					// Slider
+
 					Rectangle {
 						Layout.fillWidth: true
 						implicitHeight: 10
@@ -84,7 +84,7 @@ Scope {
 						}
 					}
 					
-					// Percentage text
+
 					Text {
 						text: Math.round((Pipewire.defaultAudioSink?.audio.volume ?? 0) * 100) + "%"
 						color: "#ffffff"

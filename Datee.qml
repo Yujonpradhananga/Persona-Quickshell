@@ -36,7 +36,6 @@ ShellRoot {
                 precision: SystemClock.Minutes
             }
 
-            // Date module - positioned relative to screen width
             Column {
                 anchors.right: parent.horizontalCenter
                 anchors.rightMargin: parent.width * -0.42
@@ -67,7 +66,6 @@ ShellRoot {
                 }
             }
 
-            // Triangle/Day module - positioned relative to screen width
             Item {
                 anchors.left: parent.horizontalCenter
                 anchors.leftMargin: parent.width * 0.42  // 40% from center to the right
