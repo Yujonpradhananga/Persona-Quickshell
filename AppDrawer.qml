@@ -12,7 +12,6 @@ Scope {
     Mousemoverwlroots { id: mousemoverwlroots }
     P3rpause { id: p3rpause }
     StatsDetail { id: statsDetail }
-    
     Variants {
         model: Quickshell.screens
         
@@ -25,14 +24,10 @@ Scope {
                 top: true
                 bottom: true
             }
-            
             implicitWidth: toolskiRoot.isExpanded ? 500 : (toolskiRoot.isHovered ? 300 : 10)
-            
             color: "transparent"
-            
             WlrLayershell.layer: WlrLayer.Overlay
             WlrLayershell.exclusionMode: ExclusionMode.Ignore
-
             Item {
                 id: toolskiRoot
                 anchors.fill: parent
@@ -51,13 +46,11 @@ Scope {
                         }
                     }
                 }
-
                 Item {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
                     width: 10
                     height: 100
-
                     HoverHandler {
                         onHoveredChanged: {
                             if (hovered) {
@@ -144,8 +137,8 @@ Scope {
                         width: parent.width
                         height: parent.height
                         radius: width / 2
-                        color: colors.bg
-                        border.color: colors.accent
+                        color: colors.background
+                        border.color: colors.color5
                         border.width: 2
 
                         scale: mainCircleHover.hovered ? 1.05 : 1.0
