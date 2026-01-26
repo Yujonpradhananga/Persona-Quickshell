@@ -55,7 +55,6 @@ Scope {
                 screen: modelData
                 WlrLayershell.layer: WlrLayer.Background
                 WlrLayershell.namespace: "depth-wallpaper-below"
-                WlrLayershell.keyboardFocus: KeyboardFocus.None
                 
                 anchors {
                     left: true

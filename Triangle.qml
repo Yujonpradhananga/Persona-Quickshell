@@ -178,7 +178,6 @@ ShellRoot{
                       font.family: "Montserrat ExtraBold"
                       font.pixelSize: 80
                       color:"black"
-                      anchors.centerIn: parent
                     }
                   }
         }

@@ -8,44 +8,30 @@ import "."
 
 Singleton {
     id: root
-
     property var windowList: []
-    
     property var manualTagMap: ({})
-    
     property var manualMonitorMap: ({})
-
     signal windowsChanged()
-
     function windowsForTag(monitorName, tagIndex) {
         return windowList.filter(w => w.monitorName === monitorName && w.tagIndex === tagIndex)
     }
-
     function windowCountForTag(monitorName, tagIndex) {
         return windowsForTag(monitorName, tagIndex).length
     }
-
     function moveWindowToTag(toplevel, targetTagIndex) {
         if (!toplevel) return
-        
         let monitorName = ""
         if (toplevel.outputs && toplevel.outputs.length > 0) {
             monitorName = toplevel.outputs[0].name
         }
-        
         let key = getWindowKey(toplevel)
-        
         manualTagMap[key] = targetTagIndex
         if (monitorName) manualMonitorMap[key] = monitorName
-        
         toplevel.activate()
-        
         let outputToUse = monitorName || DwlService.activeOutput
-        
         moveTimer.targetTag = targetTagIndex
         moveTimer.targetOutput = outputToUse
         moveTimer.restart()
-        
         Qt.callLater(refreshWindowList)
     }
 
@@ -221,8 +207,8 @@ Singleton {
     }
 
     Connections {
-        target: ToplevelManager
-        function onToplevelsChanged() { refreshWindowList() }
+        target: ToplevelManager.toplevels
+        function onValuesChanged() { refreshWindowList() }
     }
 
     Connections {

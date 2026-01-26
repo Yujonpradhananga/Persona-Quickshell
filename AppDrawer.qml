@@ -32,7 +32,6 @@ Scope {
             
             WlrLayershell.layer: WlrLayer.Overlay
             WlrLayershell.exclusionMode: ExclusionMode.Ignore
-            WlrLayershell.keyboardFocus: KeyboardFocus.None
 
             Item {
                 id: toolskiRoot

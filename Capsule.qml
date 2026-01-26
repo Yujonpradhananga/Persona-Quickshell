@@ -19,8 +19,8 @@ ShellRoot {
           required property var modelData
           screen: modelData
           color: "transparent"
-          width: 800
-          height: 400
+          implicitWidth: 800
+          implicitHeight: 400
           property int initialLayer: WlrLayer.Top
           WlrLayershell.layer: initialLayer
           WlrLayershell.exclusionMode: ExclusionMode.Ignore
