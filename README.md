@@ -39,9 +39,9 @@ the power menu currently uses loginctl commands, feel free to change them to you
 # Dependencies
 Qt6
 ## fonts
-Linux Biolinum
-Montserrat
-Glirock
+-Linux Biolinum
+-Montserrat
+-Glirock
 
 #
 
