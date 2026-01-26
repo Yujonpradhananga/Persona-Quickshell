@@ -1,4 +1,0 @@
-set(__QT_DEPLOY_TARGET_hyprlandmonitor_FILE /home/yujon/Projects/quickshell/modules/HyprlandMonitor/build/libhyprlandmonitor.so)
-set(__QT_DEPLOY_TARGET_hyprlandmonitor_TYPE SHARED_LIBRARY)
-set(__QT_DEPLOY_TARGET_hyprlandmonitorplugin_FILE /home/yujon/.local/lib/qt6/qml/HyprlandMonitor/libhyprlandmonitorplugin.so)
-set(__QT_DEPLOY_TARGET_hyprlandmonitorplugin_TYPE MODULE_LIBRARY)

@@ -1,0 +1,50 @@
+# Build directories
+build/
+modules/*/build/
+**/build/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Compiled files
+*.so
+*.o
+*.a
+
+# Qt generated files
+*_autogen/
+*.qmlc
+*.jsc
+moc_*
+qrc_*
+
+# IDE files
+.vscode/
+.idea/
+*.user
+*.swp
+*.swo
+
+# Installation directories (if you installed locally for testing)
+.local/
+```
+
+## Recommended Repository Structure:
+```
+your-quickshell-config/
+├── .gitignore
+├── README.md
+├── shell.qml
+├── Colors.qml
+├── WorkspaceOverview.qml
+├── plugins/                    # ← Include this (source only)
+│   └── HyprlandMonitor/
+│       ├── README.md           # Build instructions
+│       ├── CMakeLists.txt
+│       ├── hyprlandmonitor.hpp
+│       └── hyprlandmonitor.cpp
+└── screenshots/                # Optional
