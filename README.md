@@ -27,6 +27,8 @@ bind = $mainMod, R, exec, quickshell -c /Location to where its installed/ ipc ca
 Mine is set like this:
 bind = $mainMod, R, exec, quickshell -c /home/yujon/Projects/quickshell/ ipc call searchapp toggle
 
+## Vim motion
+You can move up and down the AppLauncher with ctrl+k and ctrl+j and the mouse as well. You can also search for apps but the search bar is hidden for aesthetics lolz.
 
 # For MangoWC support
 replace the Mousemover.qml in the OnClicked in the AppDrawer.qml file to the Mousemoverwlroots.qml
