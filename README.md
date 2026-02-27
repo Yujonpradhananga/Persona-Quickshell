@@ -18,7 +18,7 @@ if you dont want to mannually build it and go through the installation you can u
 ## fonts used
 -Linux Biolinum. \
 -Montserrat. \
--Glirock. \
+-Glirock.
 
 # AppLauncher:
 The AppLauncher requires a hyprland keybind for it to work
