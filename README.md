@@ -9,9 +9,6 @@
 
 </div>
 
-A custom Quickshell configuration themed after Persona 3 reload.
-Hyprland and MangoWC window manager support
-
 <https://github.com/user-attachments/assets/78e3685d-7643-4e5e-ab2d-d2b7f1a44dbb>
 
 # Dependencies
@@ -32,12 +29,11 @@ if you dont want to mannually build it and go through the installation you can u
 
 # AppLauncher
 
-The AppLauncher requires a hyprland keybind for it to work
+The AppLauncher requires a hyprland keybind for it to work.
+bind = $mainMod, R, exec, quickshell -c /Location to where its installed/ ipc call searchapp toggle.
 
-## Keybind
-
-bind = $mainMod, R, exec, quickshell -c /Location to where its installed/ ipc call searchapp toggle
 Mine is set like this:
+
 bind = $mainMod, R, exec, quickshell -c /home/yujon/Projects/quickshell/ ipc call searchapp toggle
 
 ## Vim motion
