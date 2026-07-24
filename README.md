@@ -43,11 +43,6 @@ CavaVisualizer {
   height: 555
 }
 ```
-
-### Fonts Used
-
-- Glirock (for the time)
-
 ---
 
 ## AppLauncher
