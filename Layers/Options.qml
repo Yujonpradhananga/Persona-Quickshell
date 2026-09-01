@@ -7,6 +7,8 @@ import qs.Widgets as Wid
 Scope {
     id: root
     property bool shouldShow: false
+    property bool hasShown: false
+    onShouldShowChanged: if (shouldShow) hasShown = true
     property var targetScreen: null
     property bool contentVisible: false
 
@@ -33,7 +35,7 @@ Scope {
     }
 
     LazyLoader {
-        active: true
+        active: root.shouldShow || root.hasShown
         PanelWindow {
             id: optionsWindow
             visible: root.shouldShow
