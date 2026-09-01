@@ -8,6 +8,8 @@ import QtMultimedia
 Scope {
     id: root
     property bool shouldShow: false
+    property bool hasShown: false
+    onShouldShowChanged: if (shouldShow) hasShown = true
     property var targetScreen: null
 
     Process {
@@ -27,7 +29,7 @@ Scope {
     }
 
     LazyLoader {
-        active: true
+        active: root.shouldShow || root.hasShown
         PanelWindow {
             id: p3rpauseWindow
             visible: root.shouldShow

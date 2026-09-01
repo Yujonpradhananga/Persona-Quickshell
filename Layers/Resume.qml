@@ -10,6 +10,8 @@ import QtQuick.Controls
 Scope {
     id: root
     property bool shouldShow: false
+    property bool hasShown: false
+    onShouldShowChanged: if (shouldShow) hasShown = true
     property var targetScreen: null
     property bool contentVisible: false
     Connections {
@@ -24,7 +26,7 @@ Scope {
         id: resumeTransition
     }
     LazyLoader {
-        active: true
+        active: root.shouldShow || root.hasShown
         PanelWindow {
             id: resumeWindow
             visible: root.shouldShow
